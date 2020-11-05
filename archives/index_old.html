@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Password Hashing Competition</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+<header>
+<h1>Password Hashing Competition</h1>
+</header>
+
+<nav>
+<a href="index.html">INTRODUCTION</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="call.html">CALL FOR SUBMISSIONS</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="candidates.html">CANDIDATES</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="timeline.html">TIMELINE</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="interaction.html">INTERACTION</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="events.html">EVENTS</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="faq.html">FAQ</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="disclaimer.html">DISCLAIMER</a>
+<br />
+<br />
+</nav>
+
+<section>
+<h2>Introduction</h2>
+<a href="candidates.html"><b><u>July 20th, 2015: PHC winner and special recognitions
+announced.</u></b></a>
+<br/>
+<br/>
+The Password Hashing Competition (PHC) is an effort organized to
+identify new password hashing schemes in order to improve on the
+state-of-the-art (PBKDF2, scrypt, etc.), and to encourage the use of strong password protection.
+Applications include for example authentication to web services, PIN
+authentication on mobile devices, key derivation for full disk
+encryption, or private keys encryption.
+<br />
+<br />
+Motivations behind the PHC include:
+<ul>
+<li>
+The poor state of passwords protection in web services: passwords are too
+often either stored in clear (these are the services that send you your
+password by email after hitting "I forgot my password"), or just hashed
+with a cryptographic hash function (like MD5 or SHA-1), which exposes
+users' passwords to efficient brute force cracking methods.
+</li>
+<li>
+The low variety of methods available: the only standardized construction
+is <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> (PKCS#5,
+NIST SP 800-132), and there are mainly just two alternatives: <a
+href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a> and <a
+href="http://www.tarsnap.com/scrypt.html">scrypt</a>.
+</li>
+<li>
+A number of new ideas discussed within the security and cryptography
+communities, but which have not yet led to a concrete proposal.
+</li>
+</ul>
+
+(For more information on the topic of password hashing, a quick and
+comprehensive introduction is this <a
+href="http://www.openwall.com/presentations/Passwords12-The-Future-Of-Hashing/">presentation</a>.)
+<br/>
+<br/>
+To identify new password hashing schemes suitable for widespread
+adoption, the PHC follows the model of focused cryptographic
+competitions such as AES, eSTREAM, or SHA-3 (see the <a
+href="http://competitions.cr.yp.to/">Cryptographic competitions</a>
+website).
+<br />
+<br />
+The PHC is organized by a panel of experts consisting of 
+<br />
+<br />
+Tony Arcieri (@bascule, Square)
+<br />
+Jean-Philippe Aumasson (@veorq, Kudelski Security)
+<br />
+Dmitry Chestnykh (@dchest, Coding Robots)
+<br />
+Jeremi Gosney (@jmgosney, Stricture Consulting Group)
+<br />
+Russell Graves (@bitweasil, Cryptohaze)
+<br />
+Matthew Green (@matthew_d_green, Johns Hopkins University)
+<br />
+Peter Gutmann (University of Auckland)
+<br />
+Pascal Junod (@cryptopathe, HEIG-VD)
+<br />
+Poul-Henning Kamp (FreeBSD)
+<br />
+Stefan Lucks (Bauhaus-Universit&auml;t Weimar)
+<br />
+Samuel Neves (@sevenps, University of Coimbra)
+<br />
+Colin Percival (@cperciva, Tarsnap)
+<br />
+Alexander Peslyak (@solardiz, Openwall)
+<br />
+Marsh Ray (@marshray, Microsoft)
+<br />
+Jens Steube (@hashcat, Hashcat project)
+<br />
+Steve Thomas (@Sc00bzT, TobTu)
+<br />
+Meltem Sonmez Turan (NIST)
+<br />
+Zooko Wilcox-O'Hearn (@zooko, Least Authority Enterprises)
+<br />
+Christian Winnerlein (@codesinchaos, Pactas)
+<br />
+Elias Yarrkov (@yarrkov)
+<br />
+<br />
+These experts are responsible for the selection of a portfolio
+of schemes, based on the public contribution and on their assessment of
+the submissions received. They will be permitted to submit schemes.
+<br />
+<br />
+The PHC is organized by a group of individuals, not by a standardization
+body. However this does not exclude the future standardization of one or
+more of the schemes selected.
+<br />
+<br />
+The PHC is expected to rely in great part on contributions from the
+public, including for third-party implementations, cryptanalytic
+attacks, and optimized GPU or hardware crackers.
+</section>
+<footer>
+<hr />
+<i><small>Modified: 2015-07-20</small></i>
+</footer>
+</body>
+</html>

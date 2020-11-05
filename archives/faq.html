@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Password Hashing Competition</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+<header>
+<h1>Password Hashing Competition</h1>
+</header>
+
+<nav>
+<a href="index.html">INTRODUCTION</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="call.html">CALL FOR SUBMISSIONS</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="candidates.html">CANDIDATES</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="timeline.html">TIMELINE</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="interaction.html">INTERACTION</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="events.html">EVENTS</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="faq.html">FAQ</a>
+&nbsp;&nbsp;/&nbsp;
+<a href="disclaimer.html">DISCLAIMER</a>
+<br />
+<br />
+</nav>
+
+<section>
+<h2>FAQ</h2>
+
+
+<a href="#q1">
+Why do we need a password hashing competition?
+</a>
+<br />
+<a href="#q2">
+Isn't it dangerous to use a new algorithm over an existing and well-tested one?
+</a>
+<br />
+<a href="#q3">
+Why try to come up with new schemes when a major problem now isn't with the
+current schemes, but with people's implementations?  
+</a>
+<br />
+<a href="#q4">
+Can anyone provide input to the selection, or is this limited to the panel members?
+</a>
+<br />
+<a href="#q5">
+Is NIST sponsoring this? Will your results be adopted in their recommendations?
+</a>
+<br />
+<a href="#q6">
+How do requirements differ for password storage and key derivation?  
+</a>
+<br />
+<a href="#q7">
+Why not hashing passwords on the client of a web service to eliminate the risk of DoS on the server? 
+</a>
+<br />
+<a href="#q8">
+Why (not) requiring significant memory? 
+</a>
+<br />
+<a href="#q9">
+"Memory" what? 
+</a>
+<br />
+<a href="#qa">
+Should we care about timing leaks? 
+</a>
+<br />
+<a href="#qb">
+Why parallelism is often good for a password hashing algorithm?
+</a>
+<br />
+<a href="#qc">
+What is "simplicity", and why is it good? 
+</a>
+<br />
+<a href="#qd">
+Is there a formal mathematical definition of the security of a password
+hashing scheme?
+</a>
+<br />
+<a href="#qe">
+So what exactly is the attacker we should defend against?
+</a>
+<br />
+<br />
+<br />
+
+<b id="q1">
+Why do we need a password hashing competition?
+</b>
+<br />
+<br />
+Recent years have seen an increase in the number of significant website
+compromises, many of which featured the leakage of user credentials, typically
+in the form of hashes of users' passwords. 
+These hashes may then be used to recover the actual passwords using optimized
+"cracking" techniques, which can be performed relatively efficiently if a weak
+password hashing method was employed.
+<br />
+<br />
+This represents a growing threat to privacy on the Internet, since many users
+choose weak passwords or share passwords across multiple websites.
+<br />
+<br />
+The severity of these compromises is often exacerbated by the improper use or
+configuration of password hashing algorithms. 
+Used properly, these algorithms can substantially slow down the recovery of
+plaintext credentials.
+Unfortunately, many implementers do not deploy these hashes properly, in part
+due to poor algorithm choices and lack of guidance from the cryptographic
+community. 
+
+The goal of this competition is threefold: 
+<ul>
+<li>
+To promote the development of
+best-of-breed algorithms for securing passwords, 
+</li>
+<li>
+To encourage cryptographic
+research in this area, and 
+</li>
+<li>
+To develop standards and usage recommendations
+for password hashing algorithms.  
+</li>
+</ul>
+<b id="q2">
+Isn't it dangerous to use a new algorithm over an existing and well-tested one?
+</b>
+<br />
+<br />
+To be clear, submissions of existing constructions are welcome and expected.
+The purpose of this competition is not necessarily to choose an entirely new
+algorithm. It is as much to promote study and increase our confidence in the
+algorithms we have.  <br />
+<br />
+Moreover, an important secondary purpose of this competition is to encourage
+the development of detailed specifications and test vectors. There have been
+problems caused by the informal nature of some current functions' specification
+(for example, here's an example of an implementation bug that would likely have
+been prevented had a comprehensive set of test vectors been available:
+<a
+href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2483">CVE-2011-2483</a>.)
+<br /> 
+<br />
+<b id="q3">
+Why try to come up with new schemes when a major problem now isn't with the
+current schemes, but with people's implementations?  
+</b>
+<br />
+<br /> Just because the prevalent problem is with people's choice of password
+hashing schemes does not mean that the current solutions are perfect. For
+example, PBKDF2 has low memory requirements, which facilitates cracking on
+certain platforms. scrypt calls PBKDF2, which calls HMAC, which calls SHA-256,
+a nested construction that may seem overly complicated. Recent parallel
+processors are expected to bring a considerable speed-up to crack bcrypt
+passwords; etc.
+<br />
+<br />
+Also, specific applications may require specific schemes, rather than generic
+key-derivation functions. For example, schemes may be needed that fit scripting
+languages well, or schemes that are targeted to mobile applications. The PHC
+may identify such schemes, which could be incorporated into future
+cryptographic standards by NIST, ISO, ANSI, and IETF. 
+<br />
+<br />
+<b id="q4">
+Can anyone provide input to the selection, or is this limited to the panel members?
+</b>
+<br />
+<br /> 
+The panel exists solely to provide recommendations and guidance. Our
+decision will be based on research and commentary supplied by the entire
+security community. In fact, this is the entire reason we're holding the
+contest.
+<br />
+<br />
+<b id="q5">
+Is NIST sponsoring this? Will your results be adopted in their
+recommendations?
+</b>
+<br />
+<br /> 
+No, NIST is not sponsoring the PHC. However, secure password hashing schemes
+are within the scope of NIST's publications. NIST has published "SP 800-132
+Recommendation for Password-Based Key Derivation Part 1: Storage
+Applications" in 2010. NIST might consider approving similar schemes for other
+applications.
+<br />
+<br />
+<b id="q6">
+How do requirements differ for password storage and key derivation?  
+</b>
+<br />
+<br /> 
+Password storage and key derivation are two classes of applications of
+password hashing:  
+<ul>
+<li>
+Password storage is about verification of credentials for using a given
+service (typically a web service, but also for unlocking a mobile phone,
+logging in an OS, etc.).
+</li>
+<li>
+Key derivation is about generating a cryptographic key from a password,
+typically to 'unlock' an encryption service (full-disk encryption, SSH
+or PGP private keys, etc.). 
+</li>
+</ul>
+Key derivation tolerates more costly hashing (both in time and memory)
+because typical applications are run on a client, whereas the typical
+application of password storage is a commercial web service hashing on a
+remote server; a too long delay impairs user experience and costs
+precious CPU time on the server which, like memory consumption, may be
+exploited for DoS unless countermeasures are implemented.
+<br />
+<br />
+<b id="q7">
+Why not hashing passwords on the client of a web service to eliminate
+  the risk of DoS on the server? 
+</b>
+<br />
+<br /> 
+If the server receives a hash rather than a password, a leak of the
+hashes database allows to impersonate users without finding their
+passwords (as in <a
+href="http://en.wikipedia.org/wiki/Pass_the_hash">pass-the-hash</a>
+attacks).
+<br />
+<br />
+A possible solution to this problem is that the server stores a "fast"
+hash of the "slow" hash computed by the client.
+However this approach seems difficult to implement because of the
+diversity of client platforms (and thus the difference of performance of
+the "slow" hash). 
+Another approach is that of <a href="http://srp.stanford.edu/">SRP</a>,
+which hashes password on the client side to create a verifier.
+<br />
+<br />
+<b id="q8">
+Why (not) requiring significant memory? 
+</b>
+<br />
+<br /> 
+Requiring a significant amount of non-volatile memory (as in scrypt)
+tends to decrease the cost-efficiency of massively parallel attacks on
+GPUs and hardware (FPGA or ASIC), whereas general-purpose CPUs tend to
+support fast-access RAM with several MB of CPU cache.   
+<br />
+Nevertheless, on platforms such as mobile devices or smartcards,
+significant memory requirements may impair performance and/or user
+experience.
+<br />
+<br />
+<b id="q9">
+"Memory" what? 
+</b>
+<br />
+<br /> 
+Memory usage of a password hashing scheme can be characterized by
+<ul>
+<li>
+The amount of storage required (for example, "at least 4 mebibytes") 
+</li>
+<li>
+The number of accesses ("reads") to the memory 
+</li>
+<li>
+The number of modifications ("writes") to the memory
+</li>
+<li>
+The size of data blocks read and written 
+</li>
+<li>
+The order of memory addresses accessed (for example, sequential:
+addresses X, X+8, X+16, X+24, etc.)
+</li>
+<li>
+The predictability of memory addresses accessed (for example,
+sequentially-ordered accesses are predictable, whereas scrypt's ROMix
+accesses are not)
+</li>
+</ul>
+All these characteristics affect the performance and thus security of
+the scheme. 
+Showing that apparently-unpredictable memory accesses are partially
+predictable thus qualifies as an attack.
+<br />
+<br />
+<b id="qa">
+Should we care about timing leaks? 
+</b>
+<br />
+<br /> 
+If the memory addresses accessed depend on the password hashed, timing
+leaks may allow an attacker to obtain information on the password, in
+the spirit of <a
+href="https://cryptocoding.net/index.php/References#AES_cache-timing_attacks_and_defenses">cache-timing
+attacks on AES</a>. 
+<br />
+<br />
+However, to measure timings accurately one needs access to the machine
+hashing the passwords (for example, the remote server storing the
+hashes), which reduces the likelihood of this type of attack.  
+<br />
+<br />
+<b id="qb">
+Why parallelism is often good for a password hashing algorithm?
+</b>
+<br />
+<br /> 
+Consider a server equiped with an 8-core CPU, having to choose between
+two password hashing algorithms:
+<ul>
+<li>
+Algorithm A cannot be parallelized, and the server uses a single core
+of its 8-core CPU to hash passwords (since using 2, 3, or more cores
+would not speed-up hashing). 
+</li>
+<li>
+Algorithm B can be parallelized such that with 8 cores it is 8 times
+as fast as with a single core. The defender (that is, the server) can
+take advantage of this by using all 8 cores of its CPU to hash a
+password as fast as algorithm A, but making much more computations. 
+</li>
+</ul>
+Now consider attackers: with N cores they evaluate N instances of
+algorithm A in parallel, but only N/8 instances of algorithm B in the
+same amount of time.
+<br />
+<br />
+In practice it may not be wise to allocate all cores of a busy server to
+password hashing. However for applications such as full-disk encryption
+or protection of private keys on desktops it is generally okay to use
+more than one core.
+<br />
+<br />
+<b id="qc">
+What is "simplicity", and why is it good? 
+</b>
+<br />
+<br /> 
+Simplicity of an algorithm refers to
+<ul>
+<li>
+Simplicity of the specification: Clarity and conciseness, design
+symmetries (for example, iteration of an identical round function),
+reduced number of operations and components, prior knowledge required
+(for example, do we need to understand finite fields algebra?).
+</li>
+<li>
+Simplicity of implementation: Are the basic operation easily translated
+into machine instructions? (Example: 64-bit integer addition;
+counterexample: 128-bit finite-field multiplication.); Is an efficient
+implementation similar to the textbook description? (Counterexample: AES
+table-based implemetations.) 
+</li>
+</ul>
+Simpler is better for a number of reasons:
+<ul>
+<li>
+"The simplicity of a cipher contributes to the appeal it has for
+cryptanalysts, and in the absence of successful cryptanalysis, to its
+cryptographic credibility." (<a
+href="http://books.google.nl/books/about/The_Design_of_Rijndael.html?id=tfjd6icCUoYC">Daemen
+and Rijmen</a>)
+</li>
+<li>
+"Complexity provides both opportunity and hiding places for attackers"
+(<a
+href="http://chsdemocrats.house.gov/SiteDocuments/20070425145243-10189.pdf">Dan
+Geer</a>)
+</li>
+<li>
+The simpler the algorithm, the cheaper it costs to implement, debug, and
+test.
+</li>
+</ul>
+<b id="qd">
+Is there a formal mathematical definition of the security of a password
+hashing scheme? 
+</b>
+<br />
+<br /> 
+Attempts of formal definition of secure key-derivation scheme can be
+found in
+<ul>
+<li>
+Yao, Yin; <a
+href="http://palms.ee.princeton.edu/PALMSopen/yao05design.pdf">Design
+and Analysis of Password-Based Key Derivation Functions</a>; CT-RSA 2005
+</li>
+<li>
+Krawczyk; <a
+href="https://gnunet.org/sites/default/files/264.pdf">Cryptographic
+Extraction and Key Derivation</a>: The HKDF Scheme; CRYPTO 2010
+</li>
+</ul>
+These definitions can be summarized as 'the hash should behave randomly
+with respect to any of its input'.  However these definitions only
+partially address the actual security of a key derivation scheme (and of
+a PHS more generally); they do not address the security informally
+defined as 'the scheme should minimize the efficiency of attackers
+working with GPUs and FPGAs'.
+</b>
+</b>
+<br />
+<br />
+<b id="qe">
+So what exactly is the attacker we should defend against?
+</b>
+<br />
+<br /> 
+At the time of writing, the most cost-efficient attackers run
+dictionary-based attacks on GPU clusters, thanks to the high parallelism
+of modern GPUs and to the relative ease of programming on those
+platforms. Programmable or dedicated hardware circuits (FPGA, ASIC) are
+less common, but are also solutions of choice of massively parallel
+password cracking.
+Password hashing algorithms should thus minimize efficiency on those
+platforms, while maximizing efficiency on the target platform(s).
+<br /> 
+<br /> 
+That said, it is difficult to predict how future attackers will look
+like.   
+</section>
+<footer>
+<hr />
+<i><small>Modified: 2013-05-05</small></i>
+</footer>
+</body>
+</html>

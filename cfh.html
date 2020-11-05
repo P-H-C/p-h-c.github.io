@@ -1,0 +1,210 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<title>Password Hashing Competition</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+
+<section>
+<h2>PHC call for submissions</h2>
+The Password Hashing Competition (PHC) organizers solicit proposals from
+any interested party for candidate password hashing schemes, to be
+considered for inclusion in a portfolio of schemes suitable for
+widespread adoption, and covering a broad range of applications.  
+<br />
+<br />
+Submissions are due by March 31, 2014.
+All submissions received that comply with the submission requirements
+below will be made available on the website of the project, <a
+href="https://password-hashing.net">https://password-hashing.net</a>.
+<h3>Technical guidelines</h3>
+The submitted password hashing scheme should take as input at least
+<ul>
+<li>   
+A password of any length between 0 and 128 bytes (regardless of the
+encoding).
+</li>   
+<li>   
+A salt of 16 bytes.
+</li>   
+<li>   
+One or more cost parameters, to tune time and/or space usage.
+</li>   
+</ul>
+The scheme should be able to produce (but is not limited to) 32-byte
+outputs.
+If multiple output lengths are supported, the output length should be a
+parameter of the scheme. 
+Similarly, if multiple salt lengths are supported, the salt length
+should be a parameter.
+Passwords longer than 128 bytes may be supported, but that is not
+mandatory.
+<br />
+Other optional inputs include local parameters such as a personalization
+string, a secret key, or any application-specific parameter.
+<br />
+<br />
+Submissions will be evaluated according the following criteria:
+<h4>Security</h4>
+<ul>
+<li>
+Cryptographic security: the function should behave as a random function
+(random-looking output, one-way, collision resistant, immune to length
+extension, etc.).
+</li>
+<li>
+Speed-up or other efficiency improvement (e.g., in terms of memory usage per
+password tested) of cracking-optimized implementations (checking multiple sets
+of inputs in parallel, and doing so in a CPU's native code) compared to
+implementations intended for password validation should be minimal.
+</li>
+<li>
+Speed-up or other efficiency improvement (e.g., in terms of area-time product
+per password tested) of cracking-optimized ASIC, FPGA, and GPU implementations
+(checking multiple sets of inputs in parallel) compared to CPU implementations
+intended for password validation should be minimal.
+</li>
+<li>
+Resilience to side-channel attacks (timing attacks, leakages, etc.).  In
+particular, information should not leak on a password's length. 
+</li>
+</ul>
+<h4>Simplicity</h4>
+<ul>
+<li>
+Overall clarity of the scheme (design symmetries, modularity, etc.).
+</li>
+<li>
+Ease of implementation (coding, testing, debugging, integration).
+</li>
+<li>
+Use of other primitives or constructions internally (the fewer, the better).  
+</li>
+</ul>
+<h4>Functionality</h4>
+<ul>
+<li>
+Effectiveness of the cost parameter (e.g. can the time and space expected
+requirements be bypassed?).
+</li>
+<li>
+Ability to transform an existing hash to a different cost setting without
+knowledge of the password.
+</li>
+</ul>
+Submitters are encouraged to propose innovative constructions and
+methods for protecting passwords against attackers that have fully or
+partially compromised a server storing password hashes.
+For example, one may design a scheme that is slow to evaluate except on
+a server given some server-specific shortcut.
+<br />
+Submissions may also be specific to a specific application, such as mobile
+devices (e.g. to protect PINs), key derivation (e.g. for full-disk
+encryption), scripting languages (as opposed to native implementations),
+etc.
+<h3>Submission requirements</h3>
+Submissions should be sent to <a
+href="mailto:submissions@password-hashing.net">submissions@password-hashing.net</a>
+on or before March 31, 2014 as a compressed archive (tar.bz2, tar.gz,
+or zip).  
+All submissions will be acknowledged.
+<br />
+<br />
+The following are to be provided with any submission:
+<h4>Cover sheet</h4>
+<ul>
+<li>
+Name of the submitted scheme (preferably a valid C identifier).
+</li>
+<li>
+Name and email address of the submitter(s).
+</li>
+</ul>
+<h4>Specification</h4>
+<ul>
+<li>
+Complete and unambiguous description of the scheme; however if the scheme
+reuses an existing primitive, this primitive need not be described (for
+example, if the scheme uses AES, it is not necessary to copy the specification
+of AES).
+</li>
+<li>
+Statement that there are no deliberately hidden weaknesses (backdoor, etc.);
+any sign of such ill intent will be grounds for disqualification.
+</li>
+</ul>
+<h4>Initial security analysis</h4>
+<ul>
+<li>
+Discussion of the security claims and usage constraints of the proposed
+algorithm: For which usage scenarios do the designers claim their
+algorithm secure, and when should it not be used?
+</li>
+<li>
+Discussion of the security of the algorithm, and its dependence on the
+security of cryptographic primitives used by the algorithm.
+</li>
+</ul>
+<h4>Efficiency analysis</h4>
+<ul>
+<li>
+Discussion of the performance of the scheme on the target platforms (that is,
+mainstream software): expected speed of an optimized implementation, ability to
+exploit modern CPUs features (SIMD or multicore), etc.
+</li>
+<li>
+Discussion of the performance of the algorithm on platforms that may be used
+for high-speed password cracking (ASIC, FPGAs, GPUs); if possible, an
+argument why password-cracking on those platforms is not quite
+cost-effective.
+</li>
+</ul>
+<h4>Code</h4>
+<ul>
+<li>
+Reference implementation in portable C(++) with necessary build instructions
+(e.g. a Makefile). Using C++ internally is allowed, but the program
+should provide an external C API.
+OpenSSL's libcrypto may be used (e.g. for AES, SHA-256).
+The reference implementation should aim at simplicity and readability,
+rather than at performance. 
+<br />
+The API should include, but may not be limited to, a function with the
+following prototype:
+<br />
+<code>
+    int PHS(void *out, size_t outlen, const void *in, size_t inlen,
+    const void *salt, size_t saltlen, unsigned int t_cost, unsigned int
+    m_cost);
+</code>
+<br />
+The <code>t_cost</code> and <code>m_cost</code> arguments are intended
+to parameterize time and memory usage, respectively, however this is not
+a strict requirement (only one parameter may be effective,
+<code>m_cost</code> might affect time, etc.).
+</li>
+<li>
+Comprehensive set of test vectors (preferably including all byte values
+in the 0 to 255 range for both the password and the salt inputs).
+</li>
+<li>
+Optionally, implementations in other languages or specific to a given CPU/GPU,
+microarchitecture, etc.
+</li>
+</ul>
+<h4>Intellectual property statement</h4>
+Statement that the scheme is and will remain available worldwide on a royalty
+free basis, and that the designer is unaware of any patent or patent
+application that covers the use or implementation of the submitted algorithm.
+</section>
+</body>
+</html>
+
+
+
+
